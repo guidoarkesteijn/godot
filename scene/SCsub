@@ -17,6 +17,7 @@ SConscript("animation/SCsub")
 SConscript("audio/SCsub")
 SConscript("resources/SCsub")
 SConscript("debugger/SCsub")
+SConscript("state_machine/SCsub")
 SConscript("theme/SCsub")
 
 # Build it all as a library

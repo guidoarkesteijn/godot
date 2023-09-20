@@ -1,0 +1,23 @@
+#pragma once
+
+#include "state.h"
+#include "scene/main/node.h"
+
+class StateLink : public Node {
+	GDCLASS(StateLink, Node);
+
+	private:
+		static void _bind_methods();
+
+	public:
+		NodePath destination;
+
+		bool is_valid();
+
+		void activate();
+
+		void deactivate();
+
+		void set_destination_state(const NodePath &path);
+		NodePath get_destination_state() const;
+};

@@ -227,6 +227,12 @@
 #include "scene/scene_string_names.h"
 #include "scene/theme/theme_db.h"
 
+#include "scene/state_machine/state_machine.h"
+#include "scene/state_machine/state.h"
+#include "scene/state_machine/state_action.h"
+#include "scene/state_machine/state_link.h"
+#include "scene/state_machine/link_rule.h"
+
 #include "scene/main/shader_globals_override.h"
 
 #ifndef _3D_DISABLED
@@ -922,6 +928,12 @@ void register_scene_types() {
 	GDREGISTER_CLASS(StyleBoxFlat);
 	GDREGISTER_CLASS(StyleBoxLine);
 	GDREGISTER_CLASS(Theme);
+
+	GDREGISTER_CLASS(StateMachine);
+	GDREGISTER_CLASS(State);
+	GDREGISTER_CLASS(StateAction);
+	GDREGISTER_CLASS(StateLink);
+	GDREGISTER_CLASS(LinkRule);
 
 	GDREGISTER_CLASS(PolygonPathFinder);
 	GDREGISTER_CLASS(BitMap);
