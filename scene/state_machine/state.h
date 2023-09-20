@@ -10,7 +10,7 @@ public:
 
 	void update();
 
-	NodePath check();
+	Node* check();
 
 	void exit();
 };

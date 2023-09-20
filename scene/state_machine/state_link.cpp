@@ -43,6 +43,10 @@ void StateLink::deactivate() {
 	}
 }
 
+Node* StateLink::get_destination_node() {
+	return get_node_or_null(destination);
+}
+
 void StateLink::set_destination_state(const NodePath &path) {
 	destination = path;
 }

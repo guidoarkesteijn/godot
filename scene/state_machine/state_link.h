@@ -18,6 +18,8 @@ class StateLink : public Node {
 
 		void deactivate();
 
+		Node* get_destination_node();
+
 		void set_destination_state(const NodePath &path);
 		NodePath get_destination_state() const;
 };

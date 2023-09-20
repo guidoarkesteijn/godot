@@ -37,13 +37,9 @@ void StateMachine::update() {
 	if (current) {
 		current->update();
 
-		NodePath destination = current->check();
-		if (!destination.is_empty()) {
-
-			// Due to the StateLinks living two layers deeper then the statemachine.
-			// get the correct path for the state machine to start the new state.
-			// TODO: improve to make more robust. Convert path relative to childs.
-			switchState(NodePath::NodePath(destination.get_name(2)));
+		Node* destination = current->check();
+		if (destination) {
+			switchState(get_path_to(destination));
 		}
 	}
 };
@@ -75,16 +71,12 @@ void StateMachine::switchState(NodePath path) {
 		state->exit();
 	}
 
-	// TODO convert path to correct parent.
 	current_state = path;
 
 	Node *newNode = get_node_or_null(current_state);
 	State *newState = Object::cast_to<State>(newNode);
 
-	print_line("switchState: ", newState);
-
 	if (newState) {
-		print_line("enter: ", newState);
 		newState->enter();
 	}
 }

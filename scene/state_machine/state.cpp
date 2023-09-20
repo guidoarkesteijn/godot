@@ -36,7 +36,7 @@ void State::update(){
 	}
 };
 
-NodePath State::check() {
+Node* State::check() {
 	TypedArray<Node> nodes = get_children();
 
 	for (int i = 0; i < nodes.size(); i++) {
@@ -46,12 +46,12 @@ NodePath State::check() {
 		if (link) {
 			bool valid = link->is_valid();
 			if (valid) {
-				return link->destination;
+				return link->get_destination_node();
 			}
 		}
 	}
 
-	return NodePath::NodePath();
+	return nullptr;
 }
 
 void State::exit() {
