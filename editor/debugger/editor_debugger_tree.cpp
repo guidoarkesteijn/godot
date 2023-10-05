@@ -166,6 +166,7 @@ void EditorDebuggerTree::update_scene_tree(const SceneDebuggerTree *p_tree, int 
 		Ref<Texture2D> icon = EditorNode::get_singleton()->get_class_icon(node.type_name, "");
 		if (icon.is_valid()) {
 			item->set_icon(0, icon);
+			item->set_icon_max_width(0, 16);
 		}
 		item->set_metadata(0, node.id);
 
@@ -221,6 +222,16 @@ void EditorDebuggerTree::update_scene_tree(const SceneDebuggerTree *p_tree, int 
 			}
 		}
 
+		if (node.node_flags & SceneDebuggerTree::RemoteNode::NODE_HAS_IS_RUNNING_METHOD) {
+			bool is_running = node.node_flags & SceneDebuggerTree::RemoteNode::NODE_RUNNING;
+
+			if (is_running) {
+				item->set_custom_bg_color(0, Color(0, 0.5, 0.5, 0.5));
+			} else {
+				item->clear_custom_bg_color(0);
+			}
+		}
+		
 		// Add in front of the parents stack if children are expected.
 		if (node.child_count) {
 			parents.push_front(Pair<TreeItem *, int>(item, node.child_count));

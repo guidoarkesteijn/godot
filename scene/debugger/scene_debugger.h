@@ -94,6 +94,7 @@ public:
 		ObjectID id;
 		String scene_file_path;
 		uint8_t view_flags = 0;
+		uint8_t node_flags = 0;
 
 		enum ViewFlags {
 			VIEW_HAS_VISIBLE_METHOD = 1 << 1,
@@ -101,7 +102,13 @@ public:
 			VIEW_VISIBLE_IN_TREE = 1 << 3,
 		};
 
-		RemoteNode(int p_child, const String &p_name, const String &p_type, ObjectID p_id, const String p_scene_file_path, int p_view_flags) {
+		enum NodeFlags {
+			NODE_HAS_IS_RUNNING_METHOD = 1 << 1,
+			NODE_IDLE = 1 << 2,
+			NODE_RUNNING = 1 << 3
+		};
+
+		RemoteNode(int p_child, const String &p_name, const String &p_type, ObjectID p_id, const String p_scene_file_path, int p_view_flags, int p_node_flags) {
 			child_count = p_child;
 			name = p_name;
 			type_name = p_type;
@@ -109,6 +116,7 @@ public:
 
 			scene_file_path = p_scene_file_path;
 			view_flags = p_view_flags;
+			node_flags = p_node_flags;
 		}
 
 		RemoteNode() {}

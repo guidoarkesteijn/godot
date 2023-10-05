@@ -529,7 +529,13 @@ SceneDebuggerTree::SceneDebuggerTree(Node *p_root) {
 				}
 			}
 		}
-		nodes.push_back(RemoteNode(count, n->get_name(), n->get_class(), n->get_instance_id(), n->get_scene_file_path(), view_flags));
+		int node_flags = 0;
+		if (n->has_method("is_running")) {
+			node_flags |= RemoteNode::NODE_HAS_IS_RUNNING_METHOD;
+			node_flags |= n->call("is_running") ? RemoteNode::NODE_RUNNING : RemoteNode::NODE_IDLE;
+		}
+
+		nodes.push_back(RemoteNode(count, n->get_name(), n->get_class(), n->get_instance_id(), n->get_scene_file_path(), view_flags, node_flags));
 	}
 }
 
@@ -541,21 +547,23 @@ void SceneDebuggerTree::serialize(Array &p_arr) {
 		p_arr.push_back(n.id);
 		p_arr.push_back(n.scene_file_path);
 		p_arr.push_back(n.view_flags);
+		p_arr.push_back(n.node_flags);
 	}
 }
 
 void SceneDebuggerTree::deserialize(const Array &p_arr) {
 	int idx = 0;
 	while (p_arr.size() > idx) {
-		ERR_FAIL_COND(p_arr.size() < 6);
+		ERR_FAIL_COND(p_arr.size() < 7);
 		CHECK_TYPE(p_arr[idx], INT); // child_count.
 		CHECK_TYPE(p_arr[idx + 1], STRING); // name.
 		CHECK_TYPE(p_arr[idx + 2], STRING); // type_name.
 		CHECK_TYPE(p_arr[idx + 3], INT); // id.
 		CHECK_TYPE(p_arr[idx + 4], STRING); // scene_file_path.
 		CHECK_TYPE(p_arr[idx + 5], INT); // view_flags.
-		nodes.push_back(RemoteNode(p_arr[idx], p_arr[idx + 1], p_arr[idx + 2], p_arr[idx + 3], p_arr[idx + 4], p_arr[idx + 5]));
-		idx += 6;
+		CHECK_TYPE(p_arr[idx + 6], INT); // node_flags.
+		nodes.push_back(RemoteNode(p_arr[idx], p_arr[idx + 1], p_arr[idx + 2], p_arr[idx + 3], p_arr[idx + 4], p_arr[idx + 5], p_arr[idx + 6]));
+		idx += 7;
 	}
 }
 
