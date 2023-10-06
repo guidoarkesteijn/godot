@@ -36,6 +36,10 @@ void StateMachine::_notification(int p_what) {
 }
 
 void StateMachine::update() {
+	if (!running) {
+		return;
+	}
+
 	if (current_state.is_empty()) {
 		return;
 	}
@@ -54,7 +58,7 @@ void StateMachine::update() {
 };
 
 void StateMachine::activate() {
-	running = true;
+	set_running(true);
 
 	if (!start_state.is_empty()) {
 		switchState(start_state);
@@ -76,7 +80,15 @@ void StateMachine::activate() {
 }
 
 void StateMachine::deactivate() {
-	running = false;
+	set_running(false);
+
+	Node *node = get_node_or_null(current_state);
+	State *state = Object::cast_to<State>(node);
+	if (state) {
+		state->exit();
+
+		emit_signal(SNAME("state_exited"), state);
+	}
 }
 
 void StateMachine::switchState(NodePath path) {

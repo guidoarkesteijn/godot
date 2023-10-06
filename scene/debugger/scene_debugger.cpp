@@ -531,8 +531,11 @@ SceneDebuggerTree::SceneDebuggerTree(Node *p_root) {
 		}
 		int node_flags = 0;
 		if (n->has_method("is_running")) {
-			node_flags |= RemoteNode::NODE_HAS_IS_RUNNING_METHOD;
-			node_flags |= n->call("is_running") ? RemoteNode::NODE_RUNNING : RemoteNode::NODE_IDLE;
+			const Variant is_running = n->call("is_running");
+			if (is_running.get_type() == Variant::BOOL) {
+				node_flags = RemoteNode::NODE_HAS_IS_RUNNING_METHOD;
+				node_flags |= uint8_t(is_running) * RemoteNode::NODE_RUNNING;
+			}
 		}
 
 		nodes.push_back(RemoteNode(count, n->get_name(), n->get_class(), n->get_instance_id(), n->get_scene_file_path(), view_flags, node_flags));

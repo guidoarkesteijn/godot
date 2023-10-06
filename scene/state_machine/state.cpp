@@ -2,7 +2,14 @@
 #include "state_action.h"
 #include "state_link.h"
 
+void State::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_running", "running"), &State::set_running);
+	ClassDB::bind_method(D_METHOD("is_running"), &State::is_running);
+}
+
 void State::enter() {
+	set_running(true);
+
 	TypedArray<Node> nodes = get_children();
 
 	for (int i = 0; i < nodes.size(); i++) {
@@ -55,6 +62,8 @@ Node* State::check() {
 }
 
 void State::exit() {
+	set_running(false);
+
 	TypedArray<Node> nodes = get_children();
 
 	for (int i = 0; i < nodes.size(); i++) {
@@ -73,4 +82,10 @@ void State::exit() {
 			continue;
 		}
 	}
+}
+void State::set_running(bool p_running){
+	running = p_running;
+}
+bool State::is_running() const {
+	return running;
 };
