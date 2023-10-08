@@ -1,12 +1,14 @@
 #pragma once
 
+#include "state_machine_base.h"
+#include "state.h"
 #include "scene/main/node.h"
 #include "core/object/gdvirtual.gen.inc"
 
-class StateAction : public Node {
-	GDCLASS(StateAction, Node);
+class StateAction : public StateMachineBase {
+	GDCLASS(StateAction, StateMachineBase);
 
-	private:
+	protected:
 		static void _bind_methods();
 
 	public:

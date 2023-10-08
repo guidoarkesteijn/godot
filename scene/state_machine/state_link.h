@@ -1,10 +1,11 @@
 #pragma once
 
+#include "state_machine_base.h"
 #include "state.h"
 #include "scene/main/node.h"
 
-class StateLink : public Node {
-	GDCLASS(StateLink, Node);
+class StateLink : public StateMachineBase {
+	GDCLASS(StateLink, StateMachineBase);
 
 	private:
 		static void _bind_methods();

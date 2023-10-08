@@ -3,23 +3,23 @@
 #ifndef STATE_MACHINE_H
 #define STATE_MACHINE_H
 
+#include "state_machine_base.h"
 #include "scene/main/node.h"
 
-class StateMachine : public Node {
-	GDCLASS(StateMachine, Node);
-
-	bool running = false;
+class StateMachine : public StateMachineBase {
+	GDCLASS(StateMachine, StateMachineBase);
 
 	private:
 		NodePath start_state;
 		NodePath current_state;
 
+		void switchState(NodePath path);
+
+	protected:
 		void update();
 
 		void activate();
 		void deactivate();
-
-		void switchState(NodePath path);
 
 		static void _bind_methods();
 
@@ -30,10 +30,6 @@ class StateMachine : public Node {
 		NodePath get_start_state() const;
 
 		PackedStringArray get_configuration_warnings() const override;
-
-		StateMachine();
-
-		void set_running(bool p_running);
-		bool is_running() const;
 };
+
 #endif

@@ -61,6 +61,10 @@ Node* State::check() {
 	return nullptr;
 }
 
+PackedStringArray State::get_configuration_warnings() const {
+	return PackedStringArray();
+}
+
 void State::exit() {
 	set_running(false);
 
@@ -83,9 +87,3 @@ void State::exit() {
 		}
 	}
 }
-void State::set_running(bool p_running){
-	running = p_running;
-}
-bool State::is_running() const {
-	return running;
-};

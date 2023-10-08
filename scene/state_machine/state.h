@@ -1,11 +1,11 @@
 #pragma once
 
+#include "state_machine_base.h"
+#include "state_machine.h"
 #include "scene/main/node.h"
 
-class State : public Node {
-	GDCLASS(State, Node);
-
-	bool running = false;
+class State : public StateMachineBase {
+	GDCLASS(State, StateMachineBase);
 
 protected:
 
@@ -18,8 +18,7 @@ public:
 
 	Node* check();
 
-	void exit();
+	PackedStringArray get_configuration_warnings() const override;
 
-	void set_running(bool p_running);
-	bool is_running() const;
+	void exit();
 };

@@ -929,6 +929,7 @@ void register_scene_types() {
 	GDREGISTER_CLASS(StyleBoxLine);
 	GDREGISTER_CLASS(Theme);
 
+	GDREGISTER_ABSTRACT_CLASS(StateMachineBase);
 	GDREGISTER_CLASS(StateMachine);
 	GDREGISTER_CLASS(State);
 	GDREGISTER_CLASS(StateAction);

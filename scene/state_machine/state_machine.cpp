@@ -2,17 +2,6 @@
 #include "state.h"
 #include "scene/scene_string_names.h"
 
-StateMachine::StateMachine() {
-}
-
-void StateMachine::set_running(bool p_running) {
-	running = p_running;
-}
-
-bool StateMachine::is_running() const {
-	return running;
-}
-
 void StateMachine::_notification(int p_what) {
 	if (Engine::get_singleton()->is_editor_hint())
 	{
@@ -140,12 +129,9 @@ void StateMachine::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_start_state", "node"), &StateMachine::set_start_state);
 	ClassDB::bind_method(D_METHOD("get_start_state"), &StateMachine::get_start_state);
 
-	ClassDB::bind_method(D_METHOD("set_running", "running"), &StateMachine::set_running);
-	ClassDB::bind_method(D_METHOD("is_running"), &StateMachine::is_running);
-
 	ADD_PROPERTY(PropertyInfo(Variant::NODE_PATH, "start_state", PROPERTY_HINT_NODE_PATH_VALID_TYPES, "State"), "set_start_state", "get_start_state");
 
 	ADD_SIGNAL(MethodInfo("state_exited", PropertyInfo(Variant::OBJECT, "state", PROPERTY_HINT_TYPE_STRING, "State")));
 	ADD_SIGNAL(MethodInfo("state_entered", PropertyInfo(Variant::OBJECT, "state", PROPERTY_HINT_TYPE_STRING, "State")));
 	ADD_SIGNAL(MethodInfo("state_switched", PropertyInfo(Variant::OBJECT, "state", PROPERTY_HINT_TYPE_STRING, "State")));
-}
+};

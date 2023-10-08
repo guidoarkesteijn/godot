@@ -1,10 +1,12 @@
 #pragma once
 
+#include "state_link.h"
 #include "scene/main/node.h"
 #include "core/object/gdvirtual.gen.inc"
+#include "state_machine_base.h"
 
-class LinkRule : public Node {
-	GDCLASS(LinkRule, Node);
+class LinkRule : public StateMachineBase {
+	GDCLASS(LinkRule, StateMachineBase);
 
 private:
 	static void _bind_methods();
